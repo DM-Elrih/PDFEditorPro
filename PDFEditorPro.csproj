@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <LangVersion>latest</LangVersion>
+    <PublishProfile>FolderProfile</PublishProfile>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="PdfSharp" Version="6.2.2" />
+    <PackageReference Include="IronOcr" Version="2025.10.11" />
+  </ItemGroup>
+</Project>
