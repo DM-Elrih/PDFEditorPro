@@ -23,11 +23,11 @@ jobs:
       run: dotnet build --configuration Release --no-restore
     
     - name: Publish
-      run: dotnet publish -c Release -o publish
+      run: dotnet publish -c Release -o ./publish --self-contained
     
-    - name: Upload artifacts
+    - name: Upload ALL files (with DLLs)
       uses: actions/upload-artifact@v4
       with:
-        name: PDFEditorPro-Release
-        path: publish/PDFEditorPro.exe
+        name: PDFEditorPro-Complete
+        path: publish/
         retention-days: 30
