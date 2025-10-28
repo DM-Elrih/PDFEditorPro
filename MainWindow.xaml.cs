@@ -56,9 +56,9 @@ namespace PDFEditorPro
             режим = "текст";
             ХолстТекста.Visibility = Visibility.Visible;
             ПанельИнструментов.Visibility = Visibility.Visible;
-            Режим.Text = "✏️ РЕЖИМ: Добавление текста (введите текст справа, кликните на документ)";
+            Режим.Text = "✏️ РЕЖИМ: Добавление текста";
             ТекстОСR.Document.Blocks.Clear();
-            Лог("Введите текст справа и кликните на документ где его разместить");
+            Лог("Введите текст справа и кликните на документ");
         }
 
         private void РежимФото(object s, RoutedEventArgs e)
