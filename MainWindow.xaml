@@ -1,0 +1,111 @@
+<Window x:Class="PDFEditorPro.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="PDF Редактор Pro" Height="900" Width="1600" WindowStartupLocation="CenterScreen">
+    <Grid Background="#F5F5F5">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="220"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="280"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- ЛЕВАЯ ПАНЕЛЬ ИНСТРУМЕНТОВ -->
+        <StackPanel Grid.Column="0" Background="#2C3E50">
+            <TextBlock Text="PDF РЕДАКТОР PRO" FontSize="14" FontWeight="Bold" Foreground="White" Margin="10,15" TextAlignment="Center"/>
+            <Separator Background="#34495E" Margin="5"/>
+            
+            <TextBlock Text="ФАЙЛЫ" FontSize="10" FontWeight="Bold" Foreground="#BDC3C7" Margin="10,10"/>
+            <Button Content="📂 Открыть PDF" Click="ОткрытьPDF" Height="38" Margin="10,5" Background="#3498DB" Foreground="White" FontSize="11" FontWeight="Bold"/>
+            <Button Content="➕ Создать" Click="СоздатьPDF" Height="38" Margin="10,5" Background="#27AE60" Foreground="White" FontSize="11"/>
+            <Button Content="💾 Сохранить" Click="СохранитьPDF" Height="38" Margin="10,5" Background="#16A085" Foreground="White" FontSize="11"/>
+            
+            <Separator Background="#34495E" Margin="5,10"/>
+            
+            <TextBlock Text="РЕДАКТИРОВАНИЕ" FontSize="10" FontWeight="Bold" Foreground="#BDC3C7" Margin="10,10"/>
+            <Button Content="✏️ Добавить текст" Click="РежимТекста" Height="38" Margin="10,5" Background="#9B59B6" Foreground="White" FontSize="11" FontWeight="Bold"/>
+            <Button Content="🖼️ Добавить фото" Click="РежимФото" Height="38" Margin="10,5" Background="#E67E22" Foreground="White" FontSize="11"/>
+            
+            <Separator Background="#34495E" Margin="5,10"/>
+            
+            <TextBlock Text="РАСПОЗНАВАНИЕ" FontSize="10" FontWeight="Bold" Foreground="#BDC3C7" Margin="10,10"/>
+            <Button Content="🔍 РАСПОЗНАТЬ ВСЕ" Click="РаспознатьPDF" Height="50" Margin="10,5" Background="#E74C3C" Foreground="White" FontSize="12" FontWeight="Bold"/>
+            
+            <Separator Background="#34495E" Margin="5,10"/>
+            
+            <TextBlock Text="СТРАНИЦЫ" FontSize="10" FontWeight="Bold" Foreground="#BDC3C7" Margin="10,10"/>
+            <Button Content="🗑️ Удалить" Click="УдалитьСтраницу" Height="35" Margin="10,3" Background="#C0392B" Foreground="White" FontSize="10"/>
+            <Button Content="🔗 Объединить" Click="ОбъединитьPDF" Height="35" Margin="10,3" Background="#16A085" Foreground="White" FontSize="10"/>
+            <Button Content="✂️ Разделить" Click="РазделитьPDF" Height="35" Margin="10,3" Background="#2980B9" Foreground="White" FontSize="10"/>
+        </StackPanel>
+
+        <!-- ЦЕНТРАЛЬНАЯ ПАНЕЛЬ (ДОКУМЕНТ) -->
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            
+            <Border Grid.Row="0" Background="#ECF0F1" BorderBrush="#BDC3C7" BorderThickness="0,0,0,1">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock Name="Статус" Text="✓ Готово" Margin="15,0,40,0" FontSize="12" Foreground="#2C3E50" FontWeight="Bold"/>
+                    <TextBlock Name="Режим" Text="Режим просмотра" Margin="0" FontSize="12" Foreground="#E74C3C" FontWeight="Bold"/>
+                </StackPanel>
+            </Border>
+            
+            <Grid Grid.Row="1" Background="White">
+                <WebBrowser Name="ПросмотрPDF" Margin="10"/>
+                <Canvas Name="ХолстТекста" Background="Transparent" Visibility="Collapsed" MouseLeftButtonDown="КликХолстаТекста"/>
+            </Grid>
+            
+            <Border Grid.Row="2" Background="#34495E" Padding="10" Visibility="Collapsed" Name="ПанельИнструментов" Height="50">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock Text="Размер:" Foreground="White" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                    <ComboBox Name="РазмерШрифта" Width="50" Height="32" SelectedIndex="4" FontSize="10">
+                        <ComboBoxItem>10</ComboBoxItem>
+                        <ComboBoxItem>12</ComboBoxItem>
+                        <ComboBoxItem>14</ComboBoxItem>
+                        <ComboBoxItem>16</ComboBoxItem>
+                        <ComboBoxItem>18</ComboBoxItem>
+                        <ComboBoxItem>20</ComboBoxItem>
+                        <ComboBoxItem>24</ComboBoxItem>
+                    </ComboBox>
+                    
+                    <TextBlock Text="Цвет:" Foreground="White" VerticalAlignment="Center" Margin="15,0,8,0"/>
+                    <ComboBox Name="ЦветТекста" Width="70" Height="32" SelectedIndex="0" FontSize="10" Margin="0,0,20,0">
+                        <ComboBoxItem>Чёрный</ComboBoxItem>
+                        <ComboBoxItem>Красный</ComboBoxItem>
+                        <ComboBoxItem>Синий</ComboBoxItem>
+                        <ComboBoxItem>Зелёный</ComboBoxItem>
+                    </ComboBox>
+                    
+                    <Button Content="✓ Применить" Click="ПрименитьРежим" Height="35" Background="#27AE60" Foreground="White" Padding="20,0" FontWeight="Bold"/>
+                    <Button Content="❌ Отмена" Click="ОтменитьРежим" Height="35" Background="#C0392B" Foreground="White" Padding="20,0" Margin="10,0,0,0" FontWeight="Bold"/>
+                </StackPanel>
+            </Border>
+        </Grid>
+
+        <!-- ПРАВАЯ ПАНЕЛЬ (РЕЗУЛЬТАТЫ OCR) -->
+        <Grid Grid.Column="2" Background="#ECF0F1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="45"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            
+            <Border Grid.Row="0" Background="#34495E" BorderThickness="0,0,0,1">
+                <TextBlock Text="📄 Распознанный текст" FontSize="11" FontWeight="Bold" Foreground="White" Margin="10,0" VerticalAlignment="Center"/>
+            </Border>
+            
+            <Border Grid.Row="1" Margin="10" BorderBrush="#95A5A6" BorderThickness="1" Background="White">
+                <RichTextBox Name="ТекстОСR" Margin="5" VerticalScrollBarVisibility="Auto" IsReadOnly="False" Foreground="#2C3E50" FontSize="11"/>
+            </Border>
+            
+            <StackPanel Grid.Row="2" Margin="10">
+                <Button Content="✓ Вставить в документ" Click="ВставитьВДокумент" Height="35" Background="#27AE60" Foreground="White" Margin="0,0,0,5" FontWeight="Bold"/>
+                <Button Content="📋 Копировать" Click="КопироватьТекст" Height="35" Background="#3498DB" Foreground="White" Margin="0,0,0,5"/>
+                <Button Content="🗑️ Очистить" Click="ОчиститьТекст" Height="35" Background="#7F8C8D" Foreground="White"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>
