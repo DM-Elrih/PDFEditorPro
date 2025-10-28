@@ -20,7 +20,7 @@ namespace PDFEditorPro
 
         public MainWindow() => InitializeComponent();
 
-        private void Лог(string сообщение) => Статус.Text = msg;
+        private void Лог(string сообщение) => Статус.Text = сообщение;
 
         private void ОткрытьPDF(object s, RoutedEventArgs e)
         {
